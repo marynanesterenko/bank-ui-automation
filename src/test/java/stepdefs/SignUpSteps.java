@@ -32,7 +32,7 @@ public class SignUpSteps {
 
     @Given("user is on the first Sign Up form")
     public void user_is_on_the_first_sign_up_form() {
-        
+        signUpPage.verifyFirstSignUpForm();
     }
 
     @When("user fills out all the input fields")
