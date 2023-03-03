@@ -5,6 +5,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import utilities.CommonMethods;
 import utilities.ConfigReader;
+import utilities.DBUtils;
 import utilities.DriverUtilities;
 
 public class Hooks {
@@ -16,6 +17,9 @@ public class Hooks {
 
         // calling the .createDriver() method from the DriverUtilities Class
         DriverUtilities.createDriver(scenario);
+
+        // calling the .initializeDBProperties() method from the DBUtils Class
+        DBUtils.initializeDBProperties();
     }
 
     @After
@@ -28,6 +32,7 @@ public class Hooks {
             scenario.attach(CommonMethods.takeScreenshot(), "image/png", scenario.getName());
         }
         CommonMethods.takeScreenshot(scenario);
+        DBUtils.closeDBConnection();
         DriverUtilities.quitDriver(scenario);
     }
 }
