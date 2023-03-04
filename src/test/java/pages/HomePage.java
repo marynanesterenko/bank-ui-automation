@@ -12,13 +12,10 @@ public class HomePage extends BasePage{
         Assert.assertTrue("Welcome test message not visible could be on wrong page", welcomeTestMessage.isDisplayed());
     }
 
+    @FindBy(xpath = "//a[@id='transfer-menu-item']")
+    WebElement transferItemMenu;
     public void clickOnTransferBetweenAccounts() {
-    }
-
-    public void verifyTransactionHistoryDisplayed() {
-    }
-
-    public void verifyTransactionDetailsGettingUpdatedIntoTheDatabase() {
+        transferItemMenu.click();
     }
 
     @FindBy(xpath = "//a[@id='checking-menu']")
