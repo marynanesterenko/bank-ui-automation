@@ -59,27 +59,27 @@ public class SignUpSteps {
 
     @When("user enters their {string} in the Social Security Number input field")
     public void user_enters_their_in_the_social_security_number_input_field(String ssn) {
-        
+        signUpPage.enterSocialSecurityNumber(ssn);
     }
 
     @When("user enters their {string} in the Email Address input field")
     public void user_enters_their_in_the_email_address_input_field(String email) {
-        
+        signUpPage.enterEmailAddress(email);
     }
 
     @When("user creates and enters their {string} in the Password input field")
     public void user_creates_and_enters_their_in_the_password_input_field(String password) {
-        
+        signUpPage.enterPassword(password);
     }
 
     @When("user re-enters their {string} in the Confirm Password input field")
     public void user_re_enters_their_in_the_confirm_password_input_field(String password) {
-        
+        signUpPage.confirmPassword(password);
     }
 
     @When("user clicks next button")
     public void user_clicks_next_button() {
-        
+        signUpPage.clickNextButton();
     }
 
     @Then("user is transferred to the second Sign Up form to finish the Sign Up process")

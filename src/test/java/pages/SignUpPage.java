@@ -73,26 +73,26 @@ public class SignUpPage extends BasePage {
 
     @FindBy(id = "ssn")
     WebElement ssnInputField;
-    public void enterSocialSecurityNumber() {
-        ssnInputField.sendKeys("456-85-4587");
+    public void enterSocialSecurityNumber(String ssn) {
+        ssnInputField.sendKeys(ssn);
     }
 
     @FindBy(id = "emailAddress")
     WebElement emailInputField;
-    public void enterEmailAddress() {
-        emailInputField.sendKeys("ajolie@test.com");
+    public void enterEmailAddress(String email) {
+        emailInputField.sendKeys(email);
     }
 
     @FindBy(id = "password")
-    WebElement password;
-    public void enterPassword() {
-        password.sendKeys("h)Q+@Nw*xJ(26%7W");
+    WebElement passwordInputField;
+    public void enterPassword(String password) {
+        passwordInputField.sendKeys(password);
     }
 
     @FindBy(id = "confirmPassword")
     WebElement confirmPassword;
-    public void confirmPassword() {
-        confirmPassword.sendKeys("h)Q+@Nw*xJ(26%7W");
+    public void confirmPassword(String password) {
+        confirmPassword.sendKeys(password);
     }
 
     @FindBy(xpath = "//button[text()='Next']")
