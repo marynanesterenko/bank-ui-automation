@@ -100,4 +100,43 @@ public class SignUpPage extends BasePage {
     public void clickNextButton() {
         nextButton.click();
     }
+
+    public void verifyUserIsOnSecondSignUpPage() {
+    }
+
+    public void verifySecondSignUpForm() {
+    }
+
+    public void enterStreetAddress(String address) {
+    }
+
+    public void enterCity(String locality) {
+    }
+
+    public void enterState(String region) {
+    }
+
+    public void enterPostalCode(String postalCode) {
+    }
+
+    public void enterCountry(String country) {
+    }
+
+    public void enterHomePhoneNumber(String homePhone) {
+    }
+
+    public void enterCellPhoneNumber(String mobilePhone) {
+    }
+
+    public void enterWorkPhoneNumber(String workHome) {
+    }
+
+    public void enableTermsAndPolicyCheckBox() {
+    }
+
+    public void clickRegisterButton() {
+    }
+
+    public void verifyConfirmationMessage() {
+    }
 }

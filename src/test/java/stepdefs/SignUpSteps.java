@@ -84,67 +84,67 @@ public class SignUpSteps {
 
     @Then("user is transferred to the second Sign Up form to finish the Sign Up process")
     public void user_is_transferred_to_the_second_sign_up_form_to_finish_the_sign_up_process() {
-        
+        signUpPage.verifyUserIsOnSecondSignUpPage();
     }
 
     @Given("user is on the second Sign Up form")
     public void user_is_on_the_second_sign_up_form() {
-        
+        signUpPage.verifySecondSignUpForm();
     }
 
     @Given("user enters their {string} in the Address input field")
     public void user_enters_their_in_the_address_input_field(String address) {
-        
+        signUpPage.enterStreetAddress(address);
     }
 
     @Given("user enters their {string} in the Locality input field")
     public void user_enters_their_in_the_locality_input_field(String locality) {
-        
+        signUpPage.enterCity(locality);
     }
 
     @Given("user enters their {string} in the Region input field")
     public void user_enters_their_in_the_region_input_field(String region) {
-        
+        signUpPage.enterState(region);
     }
 
     @Given("user enters their {string} in the Postal Code input field")
     public void user_enters_their_in_the_postal_code_input_field(String postalCode) {
-        
+        signUpPage.enterPostalCode(postalCode);
     }
 
     @Given("user enters their {string} in the Country input field")
     public void user_enters_their_in_the_country_input_field(String country) {
-        
+        signUpPage.enterCountry(country);
     }
 
     @Given("user enters their {string} in the Home Phone input field")
     public void user_enters_their_in_the_home_phone_input_field(String homePhone) {
-        
+        signUpPage.enterHomePhoneNumber(homePhone);
     }
 
     @Given("user enters their {string} in the Mobile Phone input field")
-    public void user_enters_their_in_the_mobile_phone_input_field(String mobileHome) {
-        
+    public void user_enters_their_in_the_mobile_phone_input_field(String mobilePhone) {
+        signUpPage.enterCellPhoneNumber(mobilePhone);
     }
 
     @Given("user enters their {string} in the Work Phone input field")
     public void user_enters_their_in_the_work_phone_input_field(String workHome) {
-        
+        signUpPage.enterWorkPhoneNumber(workHome);
     }
 
     @Given("user enables the Agree the terms and policy check box")
     public void user_enables_the_agree_the_terms_and_policy_check_box() {
-        
+        signUpPage.enableTermsAndPolicyCheckBox();
     }
 
     @Given("user clicks register button")
     public void user_clicks_register_button() {
-        
+        signUpPage.clickRegisterButton();
     }
 
     @Then("the confirmation message about successful account creation is displayed")
     public void the_confirmation_message_about_successful_account_creation_is_displayed() {
-        
+        signUpPage.verifyConfirmationMessage();
     }
 }
 
