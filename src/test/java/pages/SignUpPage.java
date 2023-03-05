@@ -9,6 +9,17 @@ import java.util.List;
 
 public class SignUpPage extends BasePage {
 
+    // locators for later
+    @FindBy(xpath = "//span[contains(text(),'account is already registered with the email address provided')]")
+    WebElement existingEmailErrorMessage;
+
+    @FindBy(xpath = "//span[@aria-hidden='true']")
+    WebElement errorMessageExitButton;
+
+    @FindBy(xpath = "//a[text()=' Sign in']")
+    WebElement signInLink;
+
+    // locators current
     @FindBy(xpath = "//*[text()=' Sign Up Here']")
     WebElement signUpHereLink;
     public void verifySignUpHereLinkPresent() {
@@ -107,36 +118,69 @@ public class SignUpPage extends BasePage {
     public void verifySecondSignUpForm() {
     }
 
+    @FindBy(id = "address")
+    WebElement addressInputField;
     public void enterStreetAddress(String address) {
+        addressInputField.sendKeys(address);
     }
 
+    @FindBy(id = "locality")
+    WebElement localityInputField;
     public void enterCity(String locality) {
+        localityInputField.sendKeys(locality);
     }
 
+    @FindBy(id = "region")
+    WebElement regionInputField;
     public void enterState(String region) {
+        regionInputField.sendKeys(region);
     }
 
+    @FindBy(id = "postalCode")
+    WebElement postalCodeInputField;
     public void enterPostalCode(String postalCode) {
+        postalCodeInputField.sendKeys(postalCode);
     }
 
+    @FindBy(id = "country")
+    WebElement countryInputField;
     public void enterCountry(String country) {
+        countryInputField.sendKeys(country);
     }
 
+    @FindBy(id = "homePhone")
+    WebElement homePhoneInputField;
     public void enterHomePhoneNumber(String homePhone) {
+        homePhoneInputField.sendKeys(homePhone);
     }
 
+    @FindBy(id = "mobilePhone")
+    WebElement mobilePhoneInputField;
     public void enterCellPhoneNumber(String mobilePhone) {
+        mobilePhoneInputField.sendKeys(mobilePhone);
     }
 
+    @FindBy(id = "workPhone")
+    WebElement workPhoneInputField;
     public void enterWorkPhoneNumber(String workHome) {
+        workPhoneInputField.sendKeys(workHome);
     }
 
+    @FindBy(id = "agree-terms")
+    WebElement termsAndPolicyCheckBox;
     public void enableTermsAndPolicyCheckBox() {
+        termsAndPolicyCheckBox.click();
     }
 
+    @FindBy(xpath = "//button[text()='Register']")
+    WebElement registerButton;
     public void clickRegisterButton() {
+        registerButton.click();
     }
 
+    @FindBy(xpath = "//span[text()='Registration Successful. Please Login.']")
+    WebElement confirmationMessage;
     public void verifyConfirmationMessage() {
+        Assert.assertTrue("Confirmation message is not displayed", confirmationMessage.isDisplayed());
     }
 }
