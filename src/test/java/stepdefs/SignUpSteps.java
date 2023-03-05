@@ -146,6 +146,12 @@ public class SignUpSteps {
     public void the_confirmation_message_about_successful_account_creation_is_displayed() {
         signUpPage.verifyConfirmationMessage();
     }
+
+    @Then("verify user account record is created in the database")
+    public void verify_user_account_record_is_created_in_the_database() {
+        signUpPage.verifyAccountDetailsRecordedInTheDatabase();
+    }
+
 }
 
 

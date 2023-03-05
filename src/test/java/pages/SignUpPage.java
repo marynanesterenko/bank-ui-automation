@@ -9,7 +9,10 @@ import java.util.List;
 
 public class SignUpPage extends BasePage {
 
-    // locators for later
+    // locators for later:
+    @FindBy(xpath = "//strong[text()='Gender']")
+    WebElement genderTitle;
+
     @FindBy(xpath = "//span[contains(text(),'account is already registered with the email address provided')]")
     WebElement existingEmailErrorMessage;
 
@@ -19,7 +22,7 @@ public class SignUpPage extends BasePage {
     @FindBy(xpath = "//a[text()=' Sign in']")
     WebElement signInLink;
 
-    // locators current
+    // locators and methods for now:
     @FindBy(xpath = "//*[text()=' Sign Up Here']")
     WebElement signUpHereLink;
     public void verifySignUpHereLinkPresent() {
@@ -62,8 +65,6 @@ public class SignUpPage extends BasePage {
         lastNameInputField.sendKeys(lastName);
     }
 
-    @FindBy(xpath = "//strong[text()='Gender']")
-    WebElement genderTitle;
     @FindBy(xpath = "//input[@value='M']")
     WebElement maleOption;
     @FindBy(xpath = "//input[@value='F']")
@@ -182,5 +183,8 @@ public class SignUpPage extends BasePage {
     WebElement confirmationMessage;
     public void verifyConfirmationMessage() {
         Assert.assertTrue("Confirmation message is not displayed", confirmationMessage.isDisplayed());
+    }
+
+    public void verifyAccountDetailsRecordedInTheDatabase() {
     }
 }
