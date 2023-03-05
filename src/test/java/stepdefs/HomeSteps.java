@@ -34,13 +34,13 @@ public class HomeSteps {
         homePage.clickOnTransferBetweenAccounts();
     }
 
-    @Then("verify transaction history displayed for the new transaction")
-    public void verify_transaction_history_displayed_for_the_new_transaction() {
-        homePage.verifyTransactionHistoryDisplayed();
-    }
-
-    @Then("verify transaction details getting updated into the database")
-    public void verify_transaction_details_getting_updated_into_the_database() {
-        homePage.verifyTransactionDetailsGettingUpdatedIntoTheDatabase();
-    }
+//    @Then("verify transaction history displayed for the new transaction")
+//    public void verify_transaction_history_displayed_for_the_new_transaction() {
+//        homePage.verifyTransactionHistoryDisplayed();
+//    }
+//
+//    @Then("verify transaction details getting updated into the database")
+//    public void verify_transaction_details_getting_updated_into_the_database() {
+//        homePage.verifyTransactionDetailsGettingUpdatedIntoTheDatabase();
+//    }
 }

@@ -3,6 +3,9 @@ package pages;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.List;
 
 public class SignUpPage extends BasePage {
 
@@ -25,49 +28,59 @@ public class SignUpPage extends BasePage {
         Assert.assertTrue("The first Sign Up form is not displayed", signUpForm1.isDisplayed());
     }
 
-    @FindBy(xpath = "//select")
+    @FindBy(xpath = "//select[@id='title']")
     WebElement titleDropdown;
+    public void selectTitle(String title){
+        Select selectTitle = new Select(titleDropdown);
+        switch (title) {
+            case "Mr." -> selectTitle.selectByVisibleText("Mr.");
+            case "Ms." -> selectTitle.selectByVisibleText("Ms.");
+            case "Mrs." -> selectTitle.selectByVisibleText("Mrs.");
+        }
+    }
 
     @FindBy(id = "firstName")
-    WebElement firstName;
-    public void enterFirstName() {
-        firstName.sendKeys("Angelina");
+    WebElement firstNameInputField;
+    public void enterFirstName(String firstName) {
+        firstNameInputField.sendKeys(firstName);
     }
 
     @FindBy(id = "lastName")
-    WebElement lastName;
-    public void enterLastName() {
-        firstName.sendKeys("Jolie");
+    WebElement lastNameInputField;
+    public void enterLastName(String lastName) {
+        lastNameInputField.sendKeys(lastName);
     }
 
     @FindBy(xpath = "//strong[text()='Gender']")
-    WebElement gender;
-
-    @FindBy(xpath = "//input[@value='F']")
-    WebElement femaleOption;
-    public void indicateGender() {
-        femaleOption.click();
-    }
-
+    WebElement genderTitle;
     @FindBy(xpath = "//input[@value='M']")
     WebElement maleOption;
+    @FindBy(xpath = "//input[@value='F']")
+    WebElement femaleOption;
+    public void indicateGender(String gender){
+        if (gender.equals("M")){
+            maleOption.click();
+        } else if (gender.equals("F")){
+            femaleOption.click();
+        }
+    }
 
     @FindBy(id = "dob")
-    WebElement dob;
-    public void enterDateOfBirth() {
-        dob.sendKeys("01/01/1991");
+    WebElement dobInputField;
+    public void enterDateOfBirth(String dob) {
+        dobInputField.sendKeys(dob);
     }
 
     @FindBy(id = "ssn")
-    WebElement ssn;
+    WebElement ssnInputField;
     public void enterSocialSecurityNumber() {
-        ssn.sendKeys("456-85-4587");
+        ssnInputField.sendKeys("456-85-4587");
     }
 
     @FindBy(id = "emailAddress")
-    WebElement email;
+    WebElement emailInputField;
     public void enterEmailAddress() {
-        email.sendKeys("ajolie@test.com");
+        emailInputField.sendKeys("ajolie@test.com");
     }
 
     @FindBy(id = "password")
