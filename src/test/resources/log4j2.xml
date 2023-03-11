@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration status="INFO">
+
+    <Appenders>
+        <!-- "ToFile" this will be referenced inside the Logger -->
+        <File name="ToFile"
+              fileName="logs/${date:yyyy-MM-ddHHmmssSSS}.log"> <!-- logs/${date:yyyy-MM-ddHHmmssSSS} - this is the format of our file -->
+            <PatternLayout>
+                <Pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+        </File>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} {%t} %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+    </Appenders>
+
+    <Loggers>
+
+        <Logger name="co.wedevx" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="ToFile"/> <!-- this is the name of the Appender -->
+        </Logger>
+
+        <Root level="ERROR">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="ToFile"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>

@@ -10,13 +10,19 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.URL;
 import java.time.Duration;
+import java.util.logging.LogManager;
 
 public class DriverUtilities {
 
     static WebDriver driver;
 
+    private static final Logger LOGGER = LogManager.getLogManager(DriverUtilities.class);
+    public static String link = "http://18.118.14.155:8080/bank/login";
+
     // variable "scenario" is a parameter, which will hold the data for the scenario, which is currently running
     public static void createDriver(Scenario scenario) {
+
+        LOGGER.info("Driver setup started");
 
         // this "if else if" statement will help our program to determine, where to run the tests: on local computer or remote Virtual Machine provided to us by the Sauce Labs
         // so if in our config.properties file the value of the "dbank.host" key is "localhost", then tests will run on local machine:
@@ -68,6 +74,14 @@ public class DriverUtilities {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get(ConfigReader.getConfigProperty("dbank.baseurl"));
+        LOGGER.info("Driver connecting to: " + link);
+        driver.get(link);
+
+        // here we are checking whether the driver instance is getting created (aka Browser opens)
+        if (driver != null){
+            LOGGER.warn("Driver instance was not created");
+        }
+        LOGGER.info("Driver setup and start is successful!");
     }
 
     public static void quitDriver(Scenario scenario){
