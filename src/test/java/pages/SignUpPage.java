@@ -56,7 +56,7 @@ public class SignUpPage extends BasePage {
     @FindBy(id = "firstName")
     WebElement firstNameInputField;
     public void enterFirstName(String firstName) {
-        firstNameInputField.sendKeys(firstName);
+        firstNameInputField.sendKeys(dataFaker.name().firstName());
     }
 
     @FindBy(id = "lastName")

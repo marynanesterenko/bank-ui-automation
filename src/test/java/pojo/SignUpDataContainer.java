@@ -20,6 +20,4 @@ public class SignUpDataContainer {
     private String mobilePhone;
     private String workPhone;
 
-
-
 }
