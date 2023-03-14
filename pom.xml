@@ -66,6 +66,14 @@
             <version>8.0.28</version>
         </dependency>
 
+        <!-- RestAssured depend -->
+        <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>
