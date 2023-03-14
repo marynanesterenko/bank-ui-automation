@@ -33,7 +33,7 @@ public class SignUpPage extends BasePage {
     }
     public void verifyUserIsOnFirstSignUpPage() {
         String firstSignUpFormLink = driver.getCurrentUrl();
-        Assert.assertTrue("The Sign Up here Link did not work", firstSignUpFormLink.equalsIgnoreCase("http://18.116.88.132:8080/bank/signup"));
+        Assert.assertTrue("The Sign Up here Link did not work", firstSignUpFormLink.equalsIgnoreCase("http://18.118.14.155:8080/bank/signup"));
     }
 
     @FindBy(className = "login-form")
@@ -111,12 +111,6 @@ public class SignUpPage extends BasePage {
     WebElement nextButton;
     public void clickNextButton() {
         nextButton.click();
-    }
-
-    public void verifyUserIsOnSecondSignUpPage() {
-    }
-
-    public void verifySecondSignUpForm() {
     }
 
     @FindBy(id = "address")

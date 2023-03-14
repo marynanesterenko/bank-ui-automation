@@ -3,19 +3,26 @@ package pages;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import utilities.ConfigReader;
 import utilities.DBUtils;
 
-public class ViewCheckingAccountPage {
+public class ViewCheckingAccountPage extends BasePage{
 
-    @FindBy(xpath = "//span[@id='new-account-msg]")
-    WebElement confirmationMessage;
-    public void verifyCheckingAccountIsCreated() {
-        Assert.assertTrue("user is not able to see a confirmation message", confirmationMessage.isDisplayed());
+    @FindBy(xpath = "//*[text()='View Checking Accounts']")
+    WebElement viewCheckingAccountPageTitle;
+    @FindBy(xpath = "//*[@id='transactionTable']//tbody/tr[1]/td[4]")
+    WebElement transactionAmount;
+
+    public void verifyUserIsOnViewCheckingAccountPage(){
+        Assert.assertTrue("User is not of the View Checking Accounts Page", viewCheckingAccountPageTitle.isDisplayed());
     }
 
+    public void verifyTransactionHistoryIsDisplayed(){
+        String msg = "Transfer amount on table is not matching with actual transfer amount";
+        String expected = transactionAmount.getText();
+        String actual = "$" + ConfigReader.getConfigProperty("transfer.amount");
+        Assert.assertEquals(msg,expected,actual);
 
-    public void verifyCheckingAccountRecordInDatabase() {
-        DBUtils.executeSQLQuery("select * from digitalbank.account where name = 'Primary Checking';");
+        //Assert.assertTrue("Transfer amount on table is not matching with actual transfer amount",transactionAmount.getText().contains(ConfigReader.getConfigProperty("transfer.amount")));
     }
-
 }

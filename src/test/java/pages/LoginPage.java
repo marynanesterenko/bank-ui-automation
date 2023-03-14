@@ -3,13 +3,12 @@ package pages;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import utilities.ConfigReader;
 
 public class LoginPage extends BasePage{
 
     // locators for later
     WebElement invalidCredentialsError;
-
-
     @FindBy(xpath = "//span[@aria-hidden='true']")
     WebElement invalidCredentialsErrorExitButton;
 
@@ -18,8 +17,8 @@ public class LoginPage extends BasePage{
     @FindBy (id = "password")
     WebElement passwordInputField;
     public void enterValidUserNameAndPassword(String username, String password){
-        usernameInputField.sendKeys(username);
-        passwordInputField.sendKeys(password);
+        usernameInputField.sendKeys(ConfigReader.getConfigProperty(username));
+        passwordInputField.sendKeys(ConfigReader.getConfigProperty(password));
     }
 
     @FindBy(id = "submit")

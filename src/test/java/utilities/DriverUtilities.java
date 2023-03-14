@@ -10,15 +10,15 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.URL;
 import java.time.Duration;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DriverUtilities {
 
     static WebDriver driver;
 
     private static final Logger LOGGER = LogManager.getLogger(DriverUtilities.class);
-    //public static String link = "http://18.118.14.155:8080/bank/login";
+    public static String link = "http://18.118.14.155:8080/bank/login";
 
     // variable "scenario" is a parameter, which will hold the data for the scenario, which is currently running
     public static void createDriver(Scenario scenario) {

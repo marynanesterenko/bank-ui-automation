@@ -82,16 +82,6 @@ public class SignUpSteps {
         signUpPage.clickNextButton();
     }
 
-    @Then("user is transferred to the second Sign Up form to finish the Sign Up process")
-    public void user_is_transferred_to_the_second_sign_up_form_to_finish_the_sign_up_process() {
-        signUpPage.verifyUserIsOnSecondSignUpPage();
-    }
-
-    @Given("user is on the second Sign Up form")
-    public void user_is_on_the_second_sign_up_form() {
-        signUpPage.verifySecondSignUpForm();
-    }
-
     @Given("user enters their {string} in the Address input field")
     public void user_enters_their_in_the_address_input_field(String address) {
         signUpPage.enterStreetAddress(address);

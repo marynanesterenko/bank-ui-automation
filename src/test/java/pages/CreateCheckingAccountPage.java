@@ -8,14 +8,27 @@ public class CreateCheckingAccountPage extends BasePage{
 
     @FindBy(xpath = "//*[text()='Create Checking']")
     WebElement createCheckingLabel;
-    public void verifyUserIsOnCheckingPage() {
-        Assert.assertTrue("use id not on the create checking page", createCheckingLabel.isDisplayed());
-    }
-
     @FindBy(xpath = "//input[@id='Standard Checking']")
     WebElement standardCheckingRadioBtn;
     @FindBy(xpath = "//input[@id='Interest Checking']")
     WebElement interestCheckingRadioBtn;
+    @FindBy(xpath = "//input[@id='Individual']")
+    WebElement individualCheckingRadioBtn;
+    @FindBy(xpath = "//input[@id='Joint']")
+    WebElement jointCheckingRadioBtn;
+    @FindBy(xpath = "//input[@id='name']")
+    WebElement accountNameInputField;
+    @FindBy(xpath = "//input[@id='openingBalance']")
+    WebElement initialDepositInputField;
+    @FindBy(xpath = "//button[@id='newCheckingSubmit']")
+    WebElement submitButton;
+    @FindBy(xpath = "//*[text()='Confirmation']")
+    WebElement confirmationMessage;
+
+    public void verifyUserIsOnCheckingPage() {
+                Assert.assertTrue("use is not on the create checking page", createCheckingLabel.isDisplayed());
+    }
+
     public void selectAccountType(String accountType) {
         if (accountType.equalsIgnoreCase("Standard Checking")){
             standardCheckingRadioBtn.click();
@@ -24,10 +37,6 @@ public class CreateCheckingAccountPage extends BasePage{
         }
     }
 
-    @FindBy(xpath = "//input[@id='Individual']")
-    WebElement individualCheckingRadioBtn;
-    @FindBy(xpath = "//input[@id='Joint']")
-    WebElement jointCheckingRadioBtn;
     public void selectAccountOwnership(String accountOwnership) {
         if (accountOwnership.equalsIgnoreCase("Individual")){
             individualCheckingRadioBtn.click();
@@ -36,21 +45,20 @@ public class CreateCheckingAccountPage extends BasePage{
         }
     }
 
-    @FindBy(xpath = "//input[@id='name']")
-    WebElement accountNameInputField;
     public void enterAccountName(String accountName) {
         accountNameInputField.sendKeys(accountName);
     }
 
-    @FindBy(xpath = "//input[@id='openingBalance']")
-    WebElement initialDepositInputField;
     public void enterInitialDeposit(String initialDeposit) {
         initialDepositInputField.sendKeys(initialDeposit);
     }
 
-    @FindBy(xpath = "//button[@id='newCheckingSubmit']")
-    WebElement submitButton;
     public void clickSubmitBtn() {
         submitButton.click();
+    }
+
+    public void verifyCheckingAccountWasCreated (){
+        System.out.println(confirmationMessage.getText()); // this line is just for us to use
+        Assert.assertTrue("Confirmation message is not displayed", confirmationMessage.isDisplayed());
     }
 }

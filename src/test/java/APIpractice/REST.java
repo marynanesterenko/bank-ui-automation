@@ -43,7 +43,7 @@ public class REST {
         Response responseGetUserById = RestAssured
                 .given()
                 .contentType(ContentType.JSON)
-                .header("Authorization", "Bearer" + authorization)
+                .header("Authorization", "Bearer " + authorization)
                 .accept(ContentType.JSON)
                 .when()
                 .pathParam("userId", "1016798")
@@ -68,7 +68,7 @@ public class REST {
         Response responseCreateUser = RestAssured
                 .given()
                 .contentType(ContentType.JSON)
-                .header("Authorization", "Bearer" + authorization)
+                .header("Authorization", "Bearer " + authorization)
                 .accept(ContentType.JSON)
                 .body(body) // this is specific to POST (we might also be needing this method in PUT and PATCH methods)
                 .when()
@@ -89,11 +89,11 @@ public class REST {
         Response responseUpdateUserById = RestAssured
                 .given()
                 .contentType(ContentType.JSON)
-                .header("Authorization", "Bearer" + authorization)
+                .header("Authorization", "Bearer " + authorization)
                 .accept(ContentType.JSON)
                 .body(bodyUpdate)
                 .when()
-                .pathParam("userId", "1016407") // "id" value here will be the sae as we created using the post method above;
+                .pathParam("userId", "1016407") // "id" value here will be the same as we created using the post method above, we can grab it from the console;
                 .put("/users/{userId}");
 
         System.out.println(responseUpdateUserById.asString());
@@ -103,7 +103,7 @@ public class REST {
         Response responseDeleteUserById = RestAssured
                 .given()
                 .contentType(ContentType.JSON)
-                .header("Authorization", "Bearer" + authorization)
+                .header("Authorization", "Bearer " + authorization)
                 .accept(ContentType.JSON)
                 .when()
                 .pathParam("userId", "1016407")
