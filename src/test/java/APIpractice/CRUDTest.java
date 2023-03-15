@@ -1,107 +1,200 @@
 package APIpractice;
 
-import com.github.javafaker.Faker;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
-import org.junit.Test;
-
-public class CRUDTest {
-
-    private static final Faker FAKER = new Faker();
-    private static final String APIHOST = "https://gorest.co.in/public";
-    private static final String APIV = "/v2";
-    private static final String AUTH = "3443366bf7b323f317f245944e21ad1a53d6941839ae35e48b99ebda7062a66b";
-
+public class CRUDTest extends RESTBase {
     @Test
     public void getUsersTest() {
-        RestAssured.baseURI = APIHOST + APIV; // this line will need to be in each method
-        Response responseListUsers = RestAssured
-                .given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", "Bearer " + AUTH)
-                .accept(ContentType.JSON)
-                .when()
-                .get("/users");
+        // Response interface is where we store our response results
+        // * status code, * body, * headers
+        Response responseListUsers = restClient.getUsers(AUTH);
 
-        // TIP: we do not have to put "Assert" in the beginning, because we imported the Assert statically in the imports section at the top ^^
-        // .getBody() - gives us the entire body of the Response, not just one Object in it (applies in the case if we are retrieving the list of all users)
-        // below is an example of "soft assert" structure, which ensures that each assertion will run, regardless whether the first one fails or not
+        // Assert your tests
         assertAll(
-                () -> assertEquals(200, responseListUsers.getStatusCode(), "Status Codes are not the same"), // here we are verifying whether the Status Code is correct
-                () -> assertTrue(responseListUsers.getBody().asString().contains("id"), "id key is not present in the body"), // here we are verifying if the "id" keyword is present in the body
-                () -> assertTrue(responseListUsers.getBody().asString().contains("name"), "name key is not present in the body"),
-                () -> assertTrue(responseListUsers.getBody().asString().contains("email"), "email key is not present in the body"),
-                () -> assertTrue(responseListUsers.getBody().asString().contains("status"), "status key is not present in the body"),
-                () -> assertTrue(responseListUsers.getBody().asString().contains("gender"), "gender key is not present in the body")
+                () -> assertEquals(200, responseListUsers.getStatusCode(), "Status codes are not the same"),
+                () -> assertTrue(responseListUsers.getBody().asString().contains("id"), "id key is not present in the response body"),
+                () -> assertTrue(responseListUsers.getBody().asString().contains("name"), "name key is not present in the response body"),
+                () -> assertTrue(responseListUsers.getBody().asString().contains("email"), "email key is not present in the response body"),
+                () -> assertTrue(responseListUsers.getBody().asString().contains("status"), "status key is not present in the response body"),
+                () -> assertTrue(responseListUsers.getBody().asString().contains("gender"), "gender key is not present in the response body")
         );
     }
 
     @Test
     public void createUserTest() {
-        RestAssured.baseURI = APIHOST + APIV;
-
-        // !REMEMBER: whenever we are creating a new Object - we have to ensure we have the body
-
-        String name = FAKER.name().fullName(); // this we can use in case we need to Assert that the correct name was created
+        // Preparing request body
+        String name = FAKER.name().fullName();
         String email = FAKER.internet().emailAddress();
         String body = "{\n" +
                 "    \"name\": \"" + name + "\",\n" +
                 "    \"email\": \"" + email + "\",\n" +
-                "    \"gender\": \"female\",\n" +
-                "    \"status\": \"active\"\n" +
+                "    \"gender\": \"male\",\n" +
+                "    \"status\": \"inactive\"\n" +
                 "}";
-        // creating a user:
-        // !NOTE: watch out for the white space after the "Bearer " - it MUST be  present there
-        Response responseCreateUser = RestAssured
-                .given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", "Bearer " + AUTH)
-                .accept(ContentType.JSON)
-                .body(body)
-                .when()
-                .post("/users");
 
-        System.out.println(responseCreateUser.asString());
-        System.out.println(responseCreateUser.getStatusCode());
+        // Save post response to variable
+        // We will need status code of response
+        // We will need body of response
+        Response responseCreateUser = restClient.createUser(AUTH, body);
 
-        // we can also replace this with the SELECT SQL query
+        // Assumptions to find issues with your implementation
+        // Assertions to find issues with the application under test
+        Assumptions.assumeTrue(responseCreateUser.getStatusCode() == 201, "Create user didn't return 201 status code");
 
-        // getting the newly created user:
-        Response responseGetUserById = RestAssured
-                .given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", "Bearer " + AUTH)
-                .accept(ContentType.JSON)
-                .when()
-                .pathParam("userId", responseCreateUser.jsonPath().getString("id"))
-                .get("/users/{userId}");
+        // Save get response in variable
+        // We need it to make sure 100% that our user has been created and saved to DB
+        // We need status code
+        // We need body of response
+        Response responseGetUserById = restClient.getUserById(AUTH, responseCreateUser.jsonPath().getString("id"));
 
-        System.out.println(responseGetUserById.asString());
-        System.out.println(responseGetUserById.getStatusCode());
-
+        // Assert
         assertAll(
-                () -> assertEquals(201, responseCreateUser.getStatusCode(), "Status Codes are not the same"), // here we are again verifying the Status Code, EXPECTED: 201
-                // jsonPath() method helps us to enter the JSON Response
-                () -> assertEquals(name, responseCreateUser.jsonPath().getString("name"), "name key is not present in the body"), // jsonPath().getString() -> gets value using a key from the JSON Response
-                () -> assertEquals(email, responseCreateUser.jsonPath().getString("email"), "email key is not present in the body"),
-                // here we are checking if the Response from the Create User Request is indeed correct:
-                // (we have this in the event if, for example - the Request is being processed, but not getting created in the Database, we cannot just rely on the Response, we MUST verify the Database)
-                // this issue can appear because the DB simply doesn't have enough character allowance for what we are asking it to create, Backend will not catch this issue!
-                () -> assertEquals(200, responseGetUserById.getStatusCode(), "Status Codes are not the same"),
-                () -> assertEquals(email, responseGetUserById.jsonPath().getString("email"), "email key is not present in the body"),
-                () -> assertEquals(email, responseGetUserById.jsonPath().getString("email"), "email key is not present in the body"),
-                () -> assertTrue(responseGetUserById.getBody().asString().contains("id"), "id key is not present in the body"), // here we are verifying if the "id" keyword is present in the body
-                () -> assertTrue(responseGetUserById.getBody().asString().contains("name"), "name key is not present in the body"),
-                () -> assertTrue(responseGetUserById.getBody().asString().contains("email"), "email key is not present in the body"),
-                () -> assertTrue(responseGetUserById.getBody().asString().contains("status"), "status key is not present in the body"),
-                () -> assertTrue(responseGetUserById.getBody().asString().contains("gender"), "gender key is not present in the body")
+                // assert 201 for create
+                () -> assertEquals(201, responseCreateUser.getStatusCode(), "Status codes are not the same"),
+                // jsonPath.getString() -> gets value using a key from the json response
+                () -> assertEquals(name, responseCreateUser.jsonPath().getString("name"), "Names are not the same"),
+                // assert that name and email are correct in post response body
+                () -> assertEquals(email, responseCreateUser.jsonPath().getString("email"), "Emails are not the same"),
+                // assert 200 for get
+                () -> assertEquals(200, responseGetUserById.getStatusCode(), "Status codes are not the same"),
+                // assert name and email and keys in get response
+                () -> assertEquals(name, responseGetUserById.jsonPath().getString("name"), "Names are not the same"),
+                () -> assertEquals(email, responseGetUserById.jsonPath().getString("email"), "Emails are not the same"),
+                () -> assertTrue(responseGetUserById.getBody().asString().contains("id"), "id key is not present in the response body"),
+                () -> assertTrue(responseGetUserById.getBody().asString().contains("name"), "name key is not present in the response body"),
+                () -> assertTrue(responseGetUserById.getBody().asString().contains("email"), "email key is not present in the response body"),
+                () -> assertTrue(responseGetUserById.getBody().asString().contains("status"), "status key is not present in the response body"),
+                () -> assertTrue(responseGetUserById.getBody().asString().contains("gender"), "gender key is not present in the response body")
         );
     }
+
+    // How to test delete user and make it independent
+    // create user +
+    // get user, validate he exists +
+    // delete user +
+    // get user, validate he doesn't exist +
+    // Assertions
+    // In the hooks, you have before and after
+    // before test you can create user
+    // hook clean data after you, delete user and the history
+
+    @Test
+    public void deleteUserTest() {
+        // Preparing request body
+        String name = FAKER.name().fullName();
+        String email = FAKER.internet().emailAddress();
+        String body = "{\n" +
+                "    \"name\": \"" + name + "\",\n" +
+                "    \"email\": \"" + email + "\",\n" +
+                "    \"gender\": \"male\",\n" +
+                "    \"status\": \"inactive\"\n" +
+                "}";
+
+        // Save post response to variable
+        // We will need status code of response
+        // We will need body of response
+        Response responseCreateUser = restClient.createUser(AUTH, body);
+
+        String userId = responseCreateUser.jsonPath().getString("id");
+
+        // Assumptions to find issues with your implementation
+        // Assertions to find issues with the application under test
+        Assumptions.assumeTrue(responseCreateUser.getStatusCode() == 201, "Create user didn't return 201 status code");
+
+        // Save get response in variable
+        // We need it to make sure 100% that our user has been created and saved to DB
+        // We need status code
+        // We need body of response
+        Response responseGetUserById = restClient.getUserById(AUTH, userId);
+
+        Assumptions.assumeTrue(responseGetUserById.getStatusCode() == 200, "Get user didn't return 200 status code");
+
+        // Save delete response in variable
+        Response responseDeleteUser = restClient.deleteUserById(AUTH, userId);
+
+        Assumptions.assumeTrue(responseDeleteUser.getStatusCode() == 204, "Delete user didn't return 204 status code");
+
+        // Save get response after delete
+        Response responseGetUserByIdAfterDelete = restClient.getUserById(AUTH, userId);
+
+        // Assert
+        assertAll(
+                () -> assertEquals(204, responseDeleteUser.getStatusCode(), "Status codes are not the same"),
+                () -> assertEquals(404, responseGetUserByIdAfterDelete.getStatusCode(), "Status codes are not the same"),
+                () -> assertEquals("Resource not found", responseGetUserByIdAfterDelete.jsonPath().getString("message"), "Message key is not present in the response with status code 404")
+        );
+    }
+
+    // Create user +
+    // + Get user, validate he exists
+    // + Update user
+    // + Get user
+    // + Assert that new data is saved
+
+    @Test
+    public void updateUserTest() {
+        // Preparing request body
+        String name = FAKER.name().fullName();
+        String email = FAKER.internet().emailAddress();
+        String body = "{\n" +
+                "    \"name\": \"" + name + "\",\n" +
+                "    \"email\": \"" + email + "\",\n" +
+                "    \"gender\": \"male\",\n" +
+                "    \"status\": \"inactive\"\n" +
+                "}";
+
+        // Save post response to variable
+        // We will need status code of response
+        // We will need body of response
+        Response responseCreateUser = restClient.createUser(AUTH, body);
+
+        String userId = responseCreateUser.jsonPath().getString("id");
+
+        // Assumptions to find issues with your implementation
+        // Assertions to find issues with the application under test
+        Assumptions.assumeTrue(responseCreateUser.getStatusCode() == 201, "Create user didn't return 201 status code");
+
+        // Save get response in variable
+        // We need it to make sure 100% that our user has been created and saved to DB
+        // We need status code
+        // We need body of response
+        Response responseGetUserById = restClient.getUserById(AUTH, userId);
+
+        Assumptions.assumeTrue(responseGetUserById.getStatusCode() == 200, "Get user didn't return 200 status code");
+
+        String nameUpdated = FAKER.name().fullName();
+        String emailUpdated = FAKER.internet().emailAddress();
+        String bodyUpdate = "{\n" +
+                "    \"name\": \"" + nameUpdated + "\",\n" +
+                "    \"email\": \"" + emailUpdated + "\",\n" +
+                "    \"gender\": \"male\",\n" +
+                "    \"status\": \"active\"\n" +
+                "}";
+
+        // Saved put request to the response variable
+        Response responseUpdateUserById = restClient.updateUserById(AUTH, bodyUpdate, userId);
+
+        Assumptions.assumeTrue(responseUpdateUserById.getStatusCode() == 200, "Update user didn't return 200 status code");
+
+        // Save get response after update
+        Response responseGetUserByIdAfterUpdate = restClient.getUserById(AUTH, userId);
+
+        // Assert
+        assertAll(
+                () -> assertEquals(200, responseUpdateUserById.getStatusCode(), "Status codes are not the same"),
+                () -> assertEquals(nameUpdated, responseUpdateUserById.jsonPath().getString("name"), "Names are not the same"),
+                () -> assertEquals(emailUpdated, responseUpdateUserById.jsonPath().getString("email"), "Emails are not the same"),
+                () -> assertEquals("active", responseUpdateUserById.jsonPath().getString("status"), "Statuses are not the same"),
+                () -> assertEquals(200, responseGetUserByIdAfterUpdate.getStatusCode(), "Status codes are not the same"),
+                () -> assertEquals(nameUpdated, responseGetUserByIdAfterUpdate.jsonPath().getString("name"), "Names are not the same"),
+                () -> assertEquals(emailUpdated, responseGetUserByIdAfterUpdate.jsonPath().getString("email"), "Emails are not the same"),
+                () -> assertEquals("active", responseGetUserByIdAfterUpdate.jsonPath().getString("status"), "Statuses are not the same")
+        );
+    }
+
 }

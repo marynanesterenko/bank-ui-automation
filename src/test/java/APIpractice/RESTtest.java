@@ -4,31 +4,26 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-public class REST {
+public class RESTtest {
 
     // usually these private variables will be provided in the config.properties file
-    // this is where we will provide the base URl
-    private static final String APIHOST = "https://gorest.co.in/public";
-
-    // this is where we will provide the version
-    private static final String APIV = "/v2";
+    private static final String APIHOST = "https://gorest.co.in/public"; // this is where we will provide the "baseURl"
+    private static final String APIV = "/v2"; // this is where we will provide the API version
 
     public static void main(String[] args) {
-
         RestAssured.baseURI = APIHOST + APIV;
         String authorization = "3443366bf7b323f317f245944e21ad1a53d6941839ae35e48b99ebda7062a66b";
 
         // 1. GET method: LIST users
-        // creating a variable to store the Request that we will be sending
-        // Request stores the headers, the body, etc.
+        // creating a "responseListUsers" variable to store the Request that we will be sending (Request stores the headers, the body, etc.);
         // this is our structure for GET Request to get a list all the users:
         Response responseListUsers = RestAssured
                 .given()
-                .contentType(ContentType.JSON) //header in our Postman Request, this is the body our Request contains
+                .contentType(ContentType.JSON) // "ContentType" is a header in our Postman Request, this is the body our Request contains
                 .header("Authorization", "Bearer " + authorization)
                 .accept(ContentType.JSON) // this is another header in our Postman Request, in "accept" we are mentioning, what type of body we want to receive with our Request
-                // .then() - we will not be using this in our tests. REST Assured has some Asserts in it's libraries
-                // such as .validate(), but we will not be using REST Assured's assertions, we will be using the ones from JUnit
+                // .then() - we will not be using this in our tests. RESTtest Assured has some Asserts in it's libraries
+                // such as .validate(), but we will not be using RESTtest Assured's assertions, we will be using the ones from JUnit
                 .when()
                 .get("/users");
 
