@@ -1,4 +1,4 @@
-package APIpractice;
+package api;
 
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assumptions;
@@ -44,10 +44,10 @@ public class CRUDTest extends RESTBase {
 
         // Assumptions to find issues with your implementation
         // Assertions to find issues with the application under test
-        Assumptions.assumeTrue(responseCreateUser.getStatusCode() == 201, "Create user didn't return 201 status code");
+        Assumptions.assumeTrue(responseCreateUser.getStatusCode() == 201, "Create UsersPojo didn't return 201 status code");
 
         // Save get response in variable
-        // We need it to make sure 100% that our user has been created and saved to DB
+        // We need it to make sure 100% that our UsersPojo has been created and saved to DB
         // We need status code
         // We need body of response
         Response responseGetUserById = restClient.getUserById(AUTH, responseCreateUser.jsonPath().getString("id"));
@@ -73,15 +73,15 @@ public class CRUDTest extends RESTBase {
         );
     }
 
-    // How to test delete user and make it independent
-    // create user +
-    // get user, validate he exists +
-    // delete user +
-    // get user, validate he doesn't exist +
+    // How to test delete UsersPojo and make it independent
+    // create UsersPojo +
+    // get UsersPojo, validate he exists +
+    // delete UsersPojo +
+    // get UsersPojo, validate he doesn't exist +
     // Assertions
     // In the hooks, you have before and after
-    // before test you can create user
-    // hook clean data after you, delete user and the history
+    // before test you can create UsersPojo
+    // hook clean data after you, delete UsersPojo and the history
 
     @Test
     public void deleteUserTest() {
@@ -104,20 +104,20 @@ public class CRUDTest extends RESTBase {
 
         // Assumptions to find issues with your implementation
         // Assertions to find issues with the application under test
-        Assumptions.assumeTrue(responseCreateUser.getStatusCode() == 201, "Create user didn't return 201 status code");
+        Assumptions.assumeTrue(responseCreateUser.getStatusCode() == 201, "Create UsersPojo didn't return 201 status code");
 
         // Save get response in variable
-        // We need it to make sure 100% that our user has been created and saved to DB
+        // We need it to make sure 100% that our UsersPojo has been created and saved to DB
         // We need status code
         // We need body of response
         Response responseGetUserById = restClient.getUserById(AUTH, userId);
 
-        Assumptions.assumeTrue(responseGetUserById.getStatusCode() == 200, "Get user didn't return 200 status code");
+        Assumptions.assumeTrue(responseGetUserById.getStatusCode() == 200, "Get UsersPojo didn't return 200 status code");
 
         // Save delete response in variable
         Response responseDeleteUser = restClient.deleteUserById(AUTH, userId);
 
-        Assumptions.assumeTrue(responseDeleteUser.getStatusCode() == 204, "Delete user didn't return 204 status code");
+        Assumptions.assumeTrue(responseDeleteUser.getStatusCode() == 204, "Delete UsersPojo didn't return 204 status code");
 
         // Save get response after delete
         Response responseGetUserByIdAfterDelete = restClient.getUserById(AUTH, userId);
@@ -130,10 +130,10 @@ public class CRUDTest extends RESTBase {
         );
     }
 
-    // Create user +
-    // + Get user, validate he exists
-    // + Update user
-    // + Get user
+    // Create UsersPojo +
+    // + Get UsersPojo, validate he exists
+    // + Update UsersPojo
+    // + Get UsersPojo
     // + Assert that new data is saved
 
     @Test
@@ -157,15 +157,15 @@ public class CRUDTest extends RESTBase {
 
         // Assumptions to find issues with your implementation
         // Assertions to find issues with the application under test
-        Assumptions.assumeTrue(responseCreateUser.getStatusCode() == 201, "Create user didn't return 201 status code");
+        Assumptions.assumeTrue(responseCreateUser.getStatusCode() == 201, "Create UsersPojo didn't return 201 status code");
 
         // Save get response in variable
-        // We need it to make sure 100% that our user has been created and saved to DB
+        // We need it to make sure 100% that our UsersPojo has been created and saved to DB
         // We need status code
         // We need body of response
         Response responseGetUserById = restClient.getUserById(AUTH, userId);
 
-        Assumptions.assumeTrue(responseGetUserById.getStatusCode() == 200, "Get user didn't return 200 status code");
+        Assumptions.assumeTrue(responseGetUserById.getStatusCode() == 200, "Get UsersPojo didn't return 200 status code");
 
         String nameUpdated = FAKER.name().fullName();
         String emailUpdated = FAKER.internet().emailAddress();
@@ -179,7 +179,7 @@ public class CRUDTest extends RESTBase {
         // Saved put request to the response variable
         Response responseUpdateUserById = restClient.updateUserById(AUTH, bodyUpdate, userId);
 
-        Assumptions.assumeTrue(responseUpdateUserById.getStatusCode() == 200, "Update user didn't return 200 status code");
+        Assumptions.assumeTrue(responseUpdateUserById.getStatusCode() == 200, "Update UsersPojo didn't return 200 status code");
 
         // Save get response after update
         Response responseGetUserByIdAfterUpdate = restClient.getUserById(AUTH, userId);

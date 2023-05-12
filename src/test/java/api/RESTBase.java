@@ -1,4 +1,4 @@
-package APIpractice;
+package api;
 
 import com.github.javafaker.Faker;
 import io.restassured.RestAssured;

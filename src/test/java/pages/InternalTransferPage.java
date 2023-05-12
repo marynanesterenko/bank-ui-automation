@@ -20,7 +20,7 @@ public class InternalTransferPage extends BasePage{
     WebElement submitBtn;
 
     public void verifyInternalTransferPage() {
-        Assert.assertTrue("User is not on the Internal Transfer Page", internalTransferLabel.isDisplayed());
+        Assert.assertTrue("UsersPojo is not on the Internal Transfer Page", internalTransferLabel.isDisplayed());
     }
 
     public void selectFromAccount(String fromAccount) {

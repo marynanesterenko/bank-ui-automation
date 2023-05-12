@@ -1,4 +1,4 @@
-package APIpractice;
+package api;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -22,12 +22,12 @@ public class RESTClient {
                 .body(jsonBody)
                 // Act part
                 .when()
-                // Use post method to create new user in /users ep
+                // Use post method to create new UsersPojo in /users ep
                 .post("/users");
     }
 
     // Save get response in variable
-    // We need it to make sure 100% that our user has been created and saved to DB
+    // We need it to make sure 100% that our UsersPojo has been created and saved to DB
     // We need status code
     // We need body of response
     public Response getUserById(String AUTH, String userId) {
@@ -41,7 +41,7 @@ public class RESTClient {
                 .when()
                 // responseCreateUser.jsonPath().getString("id") -> get id from post response
                 .pathParam("userId", userId)
-                // get user by id, userId is pathparam where we dynamically provide id of newly created user
+                // get UsersPojo by id, userId is pathparam where we dynamically provide id of newly created UsersPojo
                 .get("/users/{userId}");
     }
 
@@ -74,7 +74,7 @@ public class RESTClient {
                 .accept(ContentType.JSON)
                 // Act
                 .when()
-                // Provide id of user you want to delete
+                // Provide id of UsersPojo you want to delete
                 .pathParam("userId", userId)
                 // Delete method is used
                 .delete("/users/{userId}");

@@ -13,27 +13,27 @@ public class TransferFundsSteps {
     InternalTransferPage internalTransferPage = new InternalTransferPage();
     ViewCheckingAccountPage viewCheckingAccountPage = new ViewCheckingAccountPage();
 
-    @When("user clicks on transfer between accounts")
+    @When("UsersPojo clicks on transfer between accounts")
     public void userClicksOnTransferBetweenAccounts() {
         homePage.clickOnTransferBetweenAccountsMenuOption();
     }
 
-    @Then("verify user is on Internal Transfer Page")
+    @Then("verify UsersPojo is on Internal Transfer Page")
     public void verifyUserIsOnInternalTransferPage() {
         internalTransferPage.verifyInternalTransferPage();
     }
 
-    @When("User select from account {string}")
+    @When("UsersPojo select from account {string}")
     public void userSelectFromAccount(String fromAccount) {
         internalTransferPage.selectFromAccount(fromAccount);
     }
 
-    @And("user selects to account {string}")
+    @And("UsersPojo selects to account {string}")
     public void userSelectsToAccount(String toAccount) {
         internalTransferPage.selectToAccount(toAccount);
     }
 
-    @And("user enter amount {string}")
+    @And("UsersPojo enter amount {string}")
     public void userEnterAmount(String amount) {
         internalTransferPage.enterAmount(amount);
     }
@@ -43,7 +43,7 @@ public class TransferFundsSteps {
         internalTransferPage.clickSubmitMethod();
     }
 
-    @Then("verify user is on View Accounts Page")
+    @Then("verify UsersPojo is on View Accounts Page")
     public void verifyUserIsOnViewAccountsPage() {
         viewCheckingAccountPage.verifyUserIsOnViewCheckingAccountPage();
     }

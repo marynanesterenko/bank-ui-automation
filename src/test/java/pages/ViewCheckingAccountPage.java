@@ -14,7 +14,7 @@ public class ViewCheckingAccountPage extends BasePage{
     WebElement transactionAmount;
 
     public void verifyUserIsOnViewCheckingAccountPage(){
-        Assert.assertTrue("User is not of the View Checking Accounts Page", viewCheckingAccountPageTitle.isDisplayed());
+        Assert.assertTrue("UsersPojo is not of the View Checking Accounts Page", viewCheckingAccountPageTitle.isDisplayed());
     }
 
     public void verifyTransactionHistoryIsDisplayed(){
@@ -23,6 +23,5 @@ public class ViewCheckingAccountPage extends BasePage{
         String actual = "$" + ConfigReader.getConfigProperty("transfer.amount");
         Assert.assertEquals(msg,expected,actual);
 
-        //Assert.assertTrue("Transfer amount on table is not matching with actual transfer amount",transactionAmount.getText().contains(ConfigReader.getConfigProperty("transfer.amount")));
     }
 }

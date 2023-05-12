@@ -9,7 +9,7 @@ public class LoginSteps {
 
     LoginPage loginPage = new LoginPage();
 
-    @When("user enters a combination of valid {string} and valid {string}")
+    @When("UsersPojo enters a combination of valid {string} and valid {string}")
     public void user_enters_a_combination_of_valid_and_valid(String username, String password) {
         loginPage.enterValidUserNameAndPassword(username, password);
     }
@@ -19,7 +19,7 @@ public class LoginSteps {
         loginPage.clickSignInButton();
     }
 
-    @Then("user is logged on and welcome message is displayed in the right upper corner")
+    @Then("UsersPojo is logged on and welcome message is displayed in the right upper corner")
     public void user_is_logged_on_and_welcome_message_is_displayed_in_the_right_upper_corner() {
         loginPage.verifyWelcomeMessageIsDisplayed();
     }

@@ -30,6 +30,6 @@ public class LoginPage extends BasePage{
     @FindBy (xpath = "//li[contains(text(), 'Welcome')]")
     WebElement welcomeMessage;
     public void verifyWelcomeMessageIsDisplayed() {
-        Assert.assertTrue("User is not logged on", welcomeMessage.isDisplayed());
+        Assert.assertTrue("UsersPojo is not logged on", welcomeMessage.isDisplayed());
     }
 }

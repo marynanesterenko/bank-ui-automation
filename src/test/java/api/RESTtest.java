@@ -1,4 +1,4 @@
-package APIpractice;
+package api;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -30,11 +30,11 @@ public class RESTtest {
         System.out.println(responseListUsers.asString());
         System.out.println(responseListUsers.getStatusCode());
 
-        // 2. GET method: get user by it's "id"
-        // How to retrieve a specific User from the list? There are two ways:
+        // 2. GET method: get UsersPojo by it's "id"
+        // How to retrieve a specific UsersPojo from the list? There are two ways:
         // 1. hard code the userId value inside the .get("/users/1016798"); OR
         // 2. we can also call the ".pathParam()" method and pass the key:value to it, as an argument; we also need to make sure we add the "key" to the .get() method
-        // !NOTE: (key will be "userId" and the value will be an actual User Object id)
+        // !NOTE: (key will be "userId" and the value will be an actual UsersPojo Object id)
         Response responseGetUserById = RestAssured
                 .given()
                 .contentType(ContentType.JSON)
@@ -47,7 +47,7 @@ public class RESTtest {
         System.out.println(responseGetUserById.asString());
         System.out.println(responseGetUserById.getStatusCode());
 
-        // 3. CREATE User - POST method:
+        // 3. CREATE UsersPojo - POST method:
         // Triple A structure:
         // Arrange
         // Act
@@ -72,7 +72,7 @@ public class RESTtest {
         System.out.println(responseCreateUser.asString());
         System.out.println(responseCreateUser.getStatusCode());
 
-        // 4. UPDATE User - PUT method:
+        // 4. UPDATE UsersPojo - PUT method:
         // since we are required to provide the body in the POST Request, let's create the variable where we will store it:
         String bodyUpdate = "{\n" +
                 "    \"name\": \"Maryna TEST RESTAssured\",\n" +
@@ -94,7 +94,7 @@ public class RESTtest {
         System.out.println(responseUpdateUserById.asString());
         System.out.println(responseUpdateUserById.getStatusCode());
 
-        // 4. DELETE User - DELETE method:
+        // 4. DELETE UsersPojo - DELETE method:
         Response responseDeleteUserById = RestAssured
                 .given()
                 .contentType(ContentType.JSON)
